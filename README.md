@@ -1,4 +1,5 @@
-apitic
+Test Apitic
 ======
 
-A Symfony project created on January 20, 2017, 4:36 pm.
+Projet de test Apitic.
+Ce projet est documenté via les commentaires PHP.
