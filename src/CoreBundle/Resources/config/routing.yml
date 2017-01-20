@@ -1,19 +1,19 @@
 core_homepage:
     path:     /
-    defaults: { _controller: CoreBundle:CoreController:index }
+    defaults: { _controller: CoreBundle:Core:index }
 
 core_add:
     path: /add
-    defaults: { _controller: CoreBundle:CoreController:add }
+    defaults: { _controller: CoreBundle:Core:add }
 
 core_edit:
     path: /edit/{id}
-    defaults: { _controller: CoreBundle:CoreController:edit }
+    defaults: { _controller: CoreBundle:Core:edit }
     requirements:
         id: \d+
 
 core_delete:
     path: /delete/{id}
-    defaults: { _controller: CoreBundle:CoreController:delete }
+    defaults: { _controller: CoreBundle:Core:delete }
     requirements:
         id: \d+
