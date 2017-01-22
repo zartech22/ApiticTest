@@ -37,9 +37,23 @@ class Mammal extends Animal
         return $this->getDescription();
     }
 
+    public function setFur($fur)
+    {
+        $this->setDescription($fur);
+
+        return $this;
+    }
+
     public function growl()
     {
         return $this->getSpecies();
+    }
+
+    public function setGrowl($growl)
+    {
+        $this->setSpecies($growl);
+
+        return $this;
     }
 
     public function __toString()

@@ -51,7 +51,6 @@ class Animal
      */
     private $name;
 
-
     /**
      * Get id
      *

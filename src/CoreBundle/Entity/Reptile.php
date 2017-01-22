@@ -37,9 +37,23 @@ class Reptile extends Animal
         return $this->getDescription();
     }
 
+    public function setScale($scale)
+    {
+        $this->setDescription($scale);
+
+        return $this;
+    }
+
     public function hiss()
     {
         return $this->getSpecies();
+    }
+
+    public function setHiss($hiss)
+    {
+        $this->setSpecies($hiss);
+
+        return $this;
     }
 
     public function __toString()

@@ -37,13 +37,27 @@ class Bird extends Animal
         return $this->getDescription();
     }
 
+    public function setFeathers($featers)
+    {
+        $this->setDescription($featers);
+
+        return $this;
+    }
+
     public function tweet()
     {
         return $this->getSpecies();
     }
 
+    public function setTweet($tweet)
+    {
+        $this->setSpecies($tweet);
+
+        return $this;
+    }
+
     public function __toString()
     {
-        return 'Je suis un(e) ' .$this->tweet(). ' et ma fourrure est ' .$this->feathers(). '.';
+        return 'Je suis un(e) ' .$this->tweet(). ' et mon plumage est ' .$this->feathers(). '.';
     }
 }
