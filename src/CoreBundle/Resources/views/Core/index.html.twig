@@ -1,0 +1,25 @@
+{% extends 'CoreBundle::layout.html.twig' %}
+
+{% block core_title %}Liste de mes animaux{% endblock %}
+
+{% block core_body %}
+    {% if animals is not empty %}
+        <table class="table table-bordered">
+            <tr>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Action</th>
+            </tr>
+
+            {% for animal in animals %}
+                <tr {{ addAnimalColor(animal) }}>
+                    <td>{{ animal.name }}</td>
+                    <td>{{ animal }}</td>
+                    <td><span class="glyphicon glyphicon-edit"></span> &nbsp; <span class="glyphicon glyphicon-trash"></span> </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+            <p>Il n'y a rien à afficher !</p>
+    {% endif %}
+{% endblock %}
