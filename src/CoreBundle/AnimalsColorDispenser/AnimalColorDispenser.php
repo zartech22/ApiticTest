@@ -50,7 +50,7 @@ class AnimalColorDispenser extends \Twig_Extension
         if (!array_key_exists(get_class($animal), self::$colors)) {
             $index = rand(0, count(self::$safeColors) - 1);
             self::$colors[get_class($animal)] = self::$safeColors[$index];
-            unset(self::$safeColors[$index]);
+            array_splice(self::$safeColors, $index, 1);
         }
 
         $color = self::$colors[get_class($animal)];
