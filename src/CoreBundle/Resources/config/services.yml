@@ -1,4 +1,9 @@
 services:
+    core.spe:
+        class: CoreBundle\DoctrineListener\AnimalSpecializer
+        tags:
+            - { name: doctrine.event_listener, event: prePersist }
+            - { name: doctrine.event_listener, event: onFlush }
     core.animals_color_dispenser.animal_color_dispenser:
         class: CoreBundle\AnimalsColorDispenser\AnimalColorDispenser
         tags:
