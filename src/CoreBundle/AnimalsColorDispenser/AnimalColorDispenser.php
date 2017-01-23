@@ -13,30 +13,47 @@ use CoreBundle\Entity\Animal;
 
 class AnimalColorDispenser extends \Twig_Extension
 {
-    private $colors;
+    /**
+     * Holds the "Animal subclass => color" association
+     * @var array
+     */
+    private static $colors;
 
+    /**
+     * Holds "safe colors" to use
+     *
+     * Array of background colors which are compatible with black text
+     *
+     * @var array
+     */
     private static $safeColors;
 
     public function __construct()
     {
-        $this->colors = array();
+        if(self::$colors === null)
+            self::$colors = array();
 
         if(self::$safeColors === null)
             $this->generateSafeColors();
     }
 
+    /**
+     * Twig extension. Return an attribute to display the color associated with the animal subclass
+     * @param Animal $animal An animal subclass to which we return the color bonded to it
+     * @return string A 'style' attribute with 'background-color
+     */
     public function getAnimalColor($animal)
     {
         if (!is_subclass_of($animal, Animal::class))
             return '';
 
-        if (!array_key_exists(get_class($animal), $this->colors)) {
+        if (!array_key_exists(get_class($animal), self::$colors)) {
             $index = rand(0, count(self::$safeColors) - 1);
-            $this->colors[get_class($animal)] = self::$safeColors[$index];
+            self::$colors[get_class($animal)] = self::$safeColors[$index];
             unset(self::$safeColors[$index]);
         }
 
-        $color = $this->colors[get_class($animal)];
+        $color = self::$colors[get_class($animal)];
 
         return sprintf(' style="background-color: rgb(%d, %d, %d);" ', $color['r'], $color['g'], $color['b']);
     }
@@ -51,37 +68,31 @@ class AnimalColorDispenser extends \Twig_Extension
         return 'CoreAnimalColorDispenser';
     }
 
-    private function isLightColor($hexColor)
+    /**
+     * Return true if it is a light color or false.
+     *
+     * The algorithm comes from 'https://24ways.org/2010/calculating-color-contrast'
+     *
+     * @param array $color An array holding color information with keys 'r' for red, 'g' for green and 'b' for blue
+     * @return bool True if we can write in black on it or False
+     */
+    private function isLightColor(array $color)
     {
-        $r = hexdec(substr($hexColor, 0, 2));
-        $g = hexdec(substr($hexColor, 2, 2));
-        $b = hexdec(substr($hexColor, 4, 2));
-
-        $yiq = (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
+        $yiq = (($color['r'] * 299) + ($color['g'] * 587) + ($color['b'] * 114)) / 1000;
 
         return ($yiq >= 128);
     }
 
-    private function rgbToHex(array $color)
-    {
-        $hex = array();
-
-        $hex['r'] = dechex($color['r']);
-        $hex['g'] = dechex($color['g']);
-        $hex['b'] = dechex($color['b']);
-
-        $result = $hex['r'] . $hex['g'] . $hex['b'];
-
-        return $result;
-    }
-
+    /**
+     * Generates colors for the $safecolor array
+     */
     private function generateSafeColors()
     {
         $currentColor = array('r' => 0, 'g' => 0, 'b' => 0);
 
         while ($currentColor['r'] != 255)
         {
-            if($this->isLightColor($this->rgbToHex($currentColor)))
+            if($this->isLightColor($currentColor))
                 self::$safeColors[] = $currentColor;
 
             $currentColor['b'] += 51;
