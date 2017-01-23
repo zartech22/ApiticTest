@@ -9,6 +9,6 @@
 {% endblock %}
 
 {% block button_widget -%}
-    {% set attr = attr|merge({class: (attr.class|default('btn-primary') ~ ' btn')|trim}) %}
+    {% set attr = attr|merge({class: (attr.class|default('btn-primary'))|trim}) %}
     {{- parent() -}}
 {%- endblock %}
