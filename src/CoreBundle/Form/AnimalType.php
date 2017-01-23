@@ -16,55 +16,11 @@ class AnimalType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('description', TextType::class, $this->getOptionsArray("Description des écailles / fourrure / plumage de l'animal", 'form-control', 'col-sm-6 control-label'))
-            ->add('species', TextType::class, $this->getOptionsArray("Espèce de l'animal", 'form-control', 'col-sm-6 control-label'))
-            ->add('name', TextType::class, $this->getOptionsArray("Nom de l'animal", 'form-control', 'col-sm-6 control-label'))
-            ->add('type', EntityType::class, $this->getOptionsArray("Spécification de l'animal", 'form-control', 'col-sm-6 control-label',
-                array('class' => 'CoreBundle\Entity\AnimalClassification', 'property' => 'name')))
-            ->add('save', SubmitType::class, $this->getOptionsArray('Ajouter', 'btn btn-primary', ''));
-    }
-
-    /**
-     * Returns an option array for FormBuilder::add
-     *
-     * @param string $label The label to display for the form field
-     * @param string|array $class Class attribute as an array or string
-     * @param string|array $labelClass Label's class attribute as an array or string
-     * @param array $additional Additional options to add
-     * @return array The options array for a formtype
-     *
-     * @see \Symfony\Component\Form\FormBuilder
-     */
-    private function getOptionsArray($label, $class, $labelClass = "", array $additional = array())
-    {
-        $options = array();
-
-        $options['label'] = $label;
-
-        if (is_array($class)) {
-            $classStr = "";
-
-            foreach ($class as $item)
-                $classStr .= $item;
-
-            $class = $classStr;
-        }
-
-        if (is_array($labelClass)) {
-            $classStr = "";
-
-            foreach ($labelClass as $item)
-                $classStr .= $item;
-
-            $labelClass = $classStr;
-        }
-
-        $options['attr'] = array('class' => $class);
-
-        if (!empty($labelClass))
-            $options['label_attr'] = array('class' => $labelClass);
-
-        return array_merge_recursive($options, $additional);
+        $builder->add('name', TextType::class, array('label' => "Nom de l'animal"))
+            ->add('type', EntityType::class, array('label' => "Spécification de l'animal", 'class' => 'CoreBundle\Entity\AnimalClassification', 'choice_label' => 'name'))
+            ->add('species', TextType::class, array('label' => "Espèce de l'animal"))
+            ->add('description', TextType::class, array('label' => "Description des écailles / fourrure / plumage de l'animal"))
+            ->add('save', SubmitType::class, array('label' => 'Ajouter'));
     }
 
     /**

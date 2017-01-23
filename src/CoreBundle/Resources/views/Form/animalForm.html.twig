@@ -1,3 +1,4 @@
+{#
 {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
 
 {{ form_errors(form) }}
@@ -39,4 +40,7 @@
 
 {{ form_rest(form) }}
 
-{{ form_end(form) }}
+{{ form_end(form) }}#}
+
+{% form_theme form with ['bootstrap_3_horizontal_layout.html.twig', 'CoreBundle:Form:fields.html.twig'] %}
+{{ form(form) }}
