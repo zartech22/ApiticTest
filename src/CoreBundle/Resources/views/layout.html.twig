@@ -11,6 +11,9 @@
 
     <div class="container">
         <h1>{% block core_title %}{% endblock %}</h1>
+        {% for message in app.session.flashbag.get('success') %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% endfor %}
         <div class="text-center block-center" style="width: 100%;">{% block core_body %}{% endblock %}</div>
     </div>
 
