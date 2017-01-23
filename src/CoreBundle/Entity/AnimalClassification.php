@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * AnimalType
  *
- * @ORM\Table(name="animal_type")
- * @ORM\Entity(repositoryClass="CoreBundle\Repository\AnimalTypeRepository")
+ * @ORM\Table(name="animal_classification")
+ * @ORM\Entity(repositoryClass="CoreBundle\Repository\AnimalClassificationRepository")
  */
-class AnimalType
+class AnimalClassification
 {
     /**
      * @var int
@@ -43,7 +43,7 @@ class AnimalType
      * Set name
      *
      * @param string $name
-     * @return AnimalType
+     * @return AnimalClassification
      */
     public function setName($name)
     {

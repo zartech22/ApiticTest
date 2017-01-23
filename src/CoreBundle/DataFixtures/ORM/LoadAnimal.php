@@ -8,9 +8,7 @@
 
 namespace CoreBundle\DataFixtures\ORM;
 
-
-use CoreBundle\CoreBundle;
-use CoreBundle\Entity\AnimalType;
+use CoreBundle\Entity\AnimalClassification;
 use CoreBundle\Entity\Bird;
 use CoreBundle\Entity\Mammal;
 use CoreBundle\Entity\Reptile;
@@ -85,7 +83,7 @@ class LoadAnimal implements FixtureInterface
      */
     private function loadMammals(array &$set)
     {
-        $type = new AnimalType();
+        $type = new AnimalClassification();
         $type->setName('Mammifère');
 
         for ($i = 0; $i < 3; $i++)
@@ -107,7 +105,7 @@ class LoadAnimal implements FixtureInterface
      */
     private function loadReptiles(array &$set)
     {
-        $type = new AnimalType();
+        $type = new AnimalClassification();
         $type->setName('Reptile');
 
         for ($i = 0; $i < 3; $i++)
@@ -129,7 +127,7 @@ class LoadAnimal implements FixtureInterface
      */
     private function loadBirds(array &$set)
     {
-        $type = new AnimalType();
+        $type = new AnimalClassification();
         $type->setName('Oiseau');
 
         for ($i = 0; $i < 3; $i++)

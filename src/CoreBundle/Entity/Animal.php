@@ -10,7 +10,6 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="animal")
  * @ORM\Entity(repositoryClass="CoreBundle\Repository\AnimalRepository")
  * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type")
  */
 class Animal
 {
@@ -24,9 +23,9 @@ class Animal
     private $id;
 
     /**
-     * @var AnimalType
+     * @var AnimalClassification
      *
-     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\AnimalType", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\AnimalClassification", cascade={"persist"})
      */
     private $type;
 
@@ -110,10 +109,10 @@ class Animal
     /**
      * Set type
      *
-     * @param \CoreBundle\Entity\AnimalType $type
+     * @param \CoreBundle\Entity\AnimalClassification $type
      * @return Animal
      */
-    public function setType(\CoreBundle\Entity\AnimalType $type = null)
+    public function setType(\CoreBundle\Entity\AnimalClassification $type = null)
     {
         $this->type = $type;
 
@@ -123,7 +122,7 @@ class Animal
     /**
      * Get type
      *
-     * @return \CoreBundle\Entity\AnimalType 
+     * @return \CoreBundle\Entity\AnimalClassification
      */
     public function getType()
     {
@@ -151,5 +150,10 @@ class Animal
     public function getName()
     {
         return $this->name;
+    }
+
+    public function __toString()
+    {
+        return "ERROR - Je suis " .$this->getSpecies(). "et ma desc est " .$this->getDescription(). " et mon type : " .$this->getType()->getName();
     }
 }
