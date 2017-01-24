@@ -87,6 +87,7 @@ class LoadAnimal implements FixtureInterface
     {
         $type = new AnimalClassification();
         $type->setName('Mammifère');
+        $type->setClassName(Mammal::class);
 
         for ($i = 0; $i < 3; $i++)
         {
@@ -109,6 +110,7 @@ class LoadAnimal implements FixtureInterface
     {
         $type = new AnimalClassification();
         $type->setName('Reptile');
+        $type->setClassName(Reptile::class);
 
         for ($i = 0; $i < 3; $i++)
         {
@@ -131,6 +133,7 @@ class LoadAnimal implements FixtureInterface
     {
         $type = new AnimalClassification();
         $type->setName('Oiseau');
+        $type->setClassName(Bird::class);
 
         for ($i = 0; $i < 3; $i++)
         {

@@ -28,6 +28,12 @@ class AnimalClassification
      */
     private $name;
 
+    /**
+     * @var string
+     * @ORM\Column(name="class_name", type="string", length=255, unique=true)
+     */
+    private $className;
+
 
     /**
      * Get id
@@ -60,5 +66,29 @@ class AnimalClassification
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set class
+     *
+     * @param string $className
+     *
+     * @return AnimalClassification
+     */
+    public function setClassName($className)
+    {
+        $this->className = $className;
+
+        return $this;
+    }
+
+    /**
+     * Get class
+     *
+     * @return string
+     */
+    public function getClassName()
+    {
+        return $this->className;
     }
 }
