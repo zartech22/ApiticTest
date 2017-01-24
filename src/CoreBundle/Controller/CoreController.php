@@ -6,6 +6,7 @@ use CoreBundle\Entity\Animal;
 use CoreBundle\Form\AnimalType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CoreController extends Controller
 {
@@ -55,7 +56,7 @@ class CoreController extends Controller
         $secret = $request->getSession()->get('secret');
 
         if($secret === null || !$this->isCsrfTokenValid($secret, $csrf_token))
-            throw $this->createAccessDeniedException("Token CSRF non valide !");
+            throw new AccessDeniedHttpException("Token CSRF non valide. Réessayez en utilisant la page d'accueil.");
 
         $this->getDoctrine()->getManager()->remove($animal);
         $this->getDoctrine()->getManager()->flush();
