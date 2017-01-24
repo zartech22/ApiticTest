@@ -9,9 +9,6 @@
 namespace CoreBundle\DoctrineListener;
 
 use CoreBundle\Entity\Animal;
-use CoreBundle\Entity\Bird;
-use CoreBundle\Entity\Mammal;
-use CoreBundle\Entity\Reptile;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
@@ -44,9 +41,11 @@ class AnimalSpecializer
 
         foreach ($unitOfWork->getScheduledEntityUpdates() as $entity)
         {
-            if (is_a($entity, Animal::class) && !is_subclass_of($entity, Animal::class))
+            if (is_subclass_of($entity, Animal::class) && (get_class($entity) !== $entity->getType()->getClassName()))
             {
-                $unitOfWork->detach($entity);
+                $args->getEntityManager()->persist($this->specialize($entity));
+                $args->getEntityManager()->remove($entity);
+                $args->getEntityManager()->flush();
             }
         }
     }
@@ -72,28 +71,25 @@ class AnimalSpecializer
 
         $manager = $args->getObjectManager();
 
-        $replace = null;
+        $manager->persist($this->specialize($entity));
+    }
 
-        switch ($entity->getType()->getName())
-        {
-            case 'Mammifère':
-                $replace = new Mammal();
-                break;
-            case 'Reptile':
-                $replace = new Reptile();
-                break;
-            case 'Oiseau':
-                $replace = new Bird();
-                break;
-            default:
-                return;
-        }
+    /**
+     * Returns an Animal's subclass based on its type attribute
+     * @param Animal $entity
+     * @return Animal Subclass of Animal based on the entity's type attribute
+     */
+    private function specialize($entity)
+    {
+        $className = $entity->getType()->getClassName();
 
-        $replace->setName($entity->getName());
-        $replace->setType($entity->getType());
-        $replace->setSpecies($entity->getSpecies());
-        $replace->setDescription($entity->getDescription());
+        $specialized = new $className();
 
-        $manager->persist($replace);
+        $specialized->setName($entity->getName());
+        $specialized->setType($entity->getType());
+        $specialized->setSpecies($entity->getSpecies());
+        $specialized->setDescription($entity->getDescription());
+
+        return $specialized;
     }
 }
