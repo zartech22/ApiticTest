@@ -15,7 +15,7 @@ class Bird extends Animal
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -48,6 +48,6 @@ class Bird extends Animal
 
     public function __toString()
     {
-        return 'Je suis un(e) ' .$this->tweet(). ' et mon plumage est ' .$this->feathers(). '.';
+        return 'Je suis un(e) ' . $this->tweet() . ' et mon plumage est ' . $this->feathers() . '.';
     }
 }

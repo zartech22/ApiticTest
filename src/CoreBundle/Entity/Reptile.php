@@ -15,7 +15,7 @@ class Reptile extends Animal
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -48,6 +48,6 @@ class Reptile extends Animal
 
     public function __toString()
     {
-        return 'Je suis un(e) ' .$this->hiss(). ' et mes écailles sont ' .$this->scale(). '.';
+        return 'Je suis un(e) ' . $this->hiss() . ' et mes écailles sont ' . $this->scale() . '.';
     }
 }

@@ -53,7 +53,7 @@ class Animal
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -76,7 +76,7 @@ class Animal
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription()
     {
@@ -99,7 +99,7 @@ class Animal
     /**
      * Get species
      *
-     * @return string 
+     * @return string
      */
     public function getSpecies()
     {
@@ -145,7 +145,7 @@ class Animal
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -154,6 +154,11 @@ class Animal
 
     public function __toString()
     {
-        return "ERROR - Je suis " .$this->getSpecies(). "et ma desc est " .$this->getDescription(). " et mon type : " .$this->getType()->getName();
+        return 'ERROR - Je suis '
+            . $this->getSpecies() .
+            'et ma desc est '
+            . $this->getDescription() .
+            ' et mon type : '
+            . $this->getType()->getName();
     }
 }

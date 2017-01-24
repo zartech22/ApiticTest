@@ -8,7 +8,6 @@
 
 namespace CoreBundle\DoctrineListener;
 
-
 use CoreBundle\Entity\Animal;
 use CoreBundle\Entity\Bird;
 use CoreBundle\Entity\Mammal;
@@ -36,12 +35,20 @@ class AnimalSpecializer
         $unitOfWork = $args->getEntityManager()->getUnitOfWork();
 
         foreach ($unitOfWork->getScheduledEntityInsertions() as $entity)
-            if(is_a($entity, Animal::class) && !is_subclass_of($entity, Animal::class))
+        {
+            if (is_a($entity, Animal::class) && !is_subclass_of($entity, Animal::class))
+            {
                 $unitOfWork->detach($entity);
+            }
+        }
 
         foreach ($unitOfWork->getScheduledEntityUpdates() as $entity)
-            if(is_a($entity, Animal::class) && !is_subclass_of($entity, Animal::class))
+        {
+            if (is_a($entity, Animal::class) && !is_subclass_of($entity, Animal::class))
+            {
                 $unitOfWork->detach($entity);
+            }
+        }
     }
 
     /**
@@ -53,23 +60,29 @@ class AnimalSpecializer
     {
         $entity = $args->getObject();
 
-        if(!is_a($entity, Animal::class))
+        if (!is_a($entity, Animal::class))
+        {
             return;
+        }
+
         if (is_subclass_of($entity, Animal::class))
+        {
             return;
+        }
 
         $manager = $args->getObjectManager();
 
         $replace = null;
 
-        switch ($entity->getType()->getName()) {
-            case "Mammifère":
+        switch ($entity->getType()->getName())
+        {
+            case 'Mammifère':
                 $replace = new Mammal();
                 break;
-            case "Reptile":
+            case 'Reptile':
                 $replace = new Reptile();
                 break;
-            case "Oiseau":
+            case 'Oiseau':
                 $replace = new Bird();
                 break;
             default:

@@ -19,9 +19,21 @@ class AnimalType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class, array('label' => "Nom de l'animal"))
-            ->add('type', EntityType::class, array('label' => "Spécification de l'animal", 'class' => 'CoreBundle\Entity\AnimalClassification', 'choice_label' => 'name'))
+            ->add(
+                'type',
+                EntityType::class,
+                array(
+                    'label' => "Spécification de l'animal",
+                    'class' => 'CoreBundle\Entity\AnimalClassification',
+                    'choice_label' => 'name'
+                )
+            )
             ->add('species', TextType::class, array('label' => "Espèce de l'animal"))
-            ->add('description', TextType::class, array('label' => "Description des écailles / fourrure / plumage de l'animal"))
+            ->add(
+                'description',
+                TextType::class,
+                array('label' => "Description des écailles / fourrure / plumage de l'animal")
+            )
             ->add('save', SubmitType::class, array('label' => 'Ajouter'));
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, array($this, 'preSetDataListener'));
@@ -35,14 +47,20 @@ class AnimalType extends AbstractType
     {
         $data = $event->getData();
 
-        if($data === null)
+        if ($data === null)
+        {
             return;
+        }
 
-        if($data->getId() !== null)
+        if ($data->getId() !== null)
         {
             $options = $event->getForm()->get('save')->getConfig()->getOptions();
 
-            $event->getForm()->add('save', SubmitType::class, array_replace($options, array('label' => 'Mettre à jour')));
+            $event->getForm()->add(
+                'save',
+                SubmitType::class,
+                array_replace($options, array('label' => 'Mettre à jour'))
+            );
         }
     }
 
@@ -51,9 +69,11 @@ class AnimalType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'CoreBundle\Entity\Animal'
-        ));
+        $resolver->setDefaults(
+            array(
+                'data_class' => 'CoreBundle\Entity\Animal'
+            )
+        );
     }
 
     /**
@@ -63,6 +83,4 @@ class AnimalType extends AbstractType
     {
         return 'corebundle_animal';
     }
-
-
 }

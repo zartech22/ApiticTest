@@ -34,8 +34,8 @@ class LoadAnimal implements FixtureInterface
         'Varian', 'Fordring', 'Karma', 'Neltharion');
 
     // Lists of adjectives for the fur, the scale and the feathers of animals
-    private static $furDescriptions = array('chatoyante', 'douce', 'aux longs poils');
-    private static $scaleDescriptions = array('coupantes', 'lisses', 'résistantes');
+    private static $furDescriptions      = array('chatoyante', 'douce', 'aux longs poils');
+    private static $scaleDescriptions    = array('coupantes', 'lisses', 'résistantes');
     private static $feathersDescriptions = array('doux', 'long', 'sombre');
 
     // Lists of species
@@ -71,7 +71,9 @@ class LoadAnimal implements FixtureInterface
         $this->loadBirds($exampleSet);
 
         foreach ($exampleSet as $example)
+        {
             $manager->persist($example);
+        }
 
         $manager->flush();
     }

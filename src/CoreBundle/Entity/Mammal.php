@@ -15,7 +15,7 @@ class Mammal extends Animal
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -48,6 +48,6 @@ class Mammal extends Animal
 
     public function __toString()
     {
-        return 'Je suis un(e) ' .$this->growl(). ' et ma fourrure est ' .$this->fur(). '.';
+        return 'Je suis un(e) ' . $this->growl() . ' et ma fourrure est ' . $this->fur() . '.';
     }
 }

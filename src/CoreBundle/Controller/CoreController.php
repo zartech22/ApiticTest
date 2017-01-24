@@ -14,7 +14,7 @@ class CoreController extends Controller
     {
         $animals = $this->getDoctrine()->getRepository('CoreBundle:Animal')->findAll();
 
-        $secret = uniqid("", true);
+        $secret = uniqid('', true);
         $request->getSession()->set('secret', $secret);
 
         return $this->render('CoreBundle:Core:index.html.twig', array('animals' => $animals, 'secret' => $secret));
@@ -23,9 +23,9 @@ class CoreController extends Controller
     public function addAction(Request $request)
     {
         $animal = new Animal();
-        $form = $this->createForm(AnimalType::class, $animal);
+        $form   = $this->createForm(AnimalType::class, $animal);
 
-        if($form->handleRequest($request)->isValid())
+        if ($form->handleRequest($request)->isValid())
         {
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($animal);
@@ -41,7 +41,7 @@ class CoreController extends Controller
     {
         $form = $this->createForm(AnimalType::class, $animal);
 
-        if($form->handleRequest($request)->isValid())
+        if ($form->handleRequest($request)->isValid())
         {
             $this->getDoctrine()->getManager()->flush();
 
@@ -55,8 +55,10 @@ class CoreController extends Controller
     {
         $secret = $request->getSession()->get('secret');
 
-        if($secret === null || !$this->isCsrfTokenValid($secret, $csrf_token))
+        if ($secret === null || !$this->isCsrfTokenValid($secret, $csrf_token))
+        {
             throw new AccessDeniedHttpException("Token CSRF non valide. Réessayez en utilisant la page d'accueil.");
+        }
 
         $this->getDoctrine()->getManager()->remove($animal);
         $this->getDoctrine()->getManager()->flush();

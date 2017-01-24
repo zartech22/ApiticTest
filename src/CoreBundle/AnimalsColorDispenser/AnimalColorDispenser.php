@@ -8,7 +8,6 @@
 
 namespace CoreBundle\AnimalsColorDispenser;
 
-
 use CoreBundle\Entity\Animal;
 
 class AnimalColorDispenser extends \Twig_Extension
@@ -30,11 +29,13 @@ class AnimalColorDispenser extends \Twig_Extension
 
     public function __construct()
     {
-        if(self::$colors === null)
+        if(self::$colors === null) {
             self::$colors = array();
+        }
 
-        if(self::$safeColors === null)
+        if(self::$safeColors === null) {
             $this->generateSafeColors();
+        }
     }
 
     /**
@@ -44,8 +45,9 @@ class AnimalColorDispenser extends \Twig_Extension
      */
     public function getAnimalColor($animal)
     {
-        if (!is_subclass_of($animal, Animal::class))
+        if (!is_subclass_of($animal, Animal::class)) {
             return '';
+        }
 
         if (!array_key_exists(get_class($animal), self::$colors)) {
             $index = rand(0, count(self::$safeColors) - 1);
@@ -60,7 +62,13 @@ class AnimalColorDispenser extends \Twig_Extension
 
     public function getFunctions()
     {
-        return array(new \Twig_SimpleFunction('addAnimalColor', array($this, 'getAnimalColor'), array('is_safe' => array('html'))));
+        return array(
+            new \Twig_SimpleFunction(
+                'addAnimalColor',
+                array($this, 'getAnimalColor'),
+                array('is_safe' => array('html'))
+            )
+        );
     }
 
     public function getName()
@@ -92,18 +100,19 @@ class AnimalColorDispenser extends \Twig_Extension
 
         while ($currentColor['r'] != 255)
         {
-            if($this->isLightColor($currentColor))
+            if($this->isLightColor($currentColor)) {
                 self::$safeColors[] = $currentColor;
+            }
 
             $currentColor['b'] += 51;
 
             if ($currentColor['b'] > 255) {
-                $currentColor['b'] = 0;
+                $currentColor['b']  = 0;
                 $currentColor['g'] += 51;
             }
 
             if ($currentColor['g'] > 255) {
-                $currentColor['g'] = 0;
+                $currentColor['g']  = 0;
                 $currentColor['r'] += 51;
             }
         }
