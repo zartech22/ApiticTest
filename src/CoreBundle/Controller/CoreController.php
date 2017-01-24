@@ -9,11 +9,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class CoreController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $animals = $this->getDoctrine()->getRepository('CoreBundle:Animal')->findAll();
 
-        return $this->render('CoreBundle:Core:index.html.twig', array('animals' => $animals));
+        $secret = uniqid("", true);
+        $request->getSession()->set('secret', $secret);
+
+        return $this->render('CoreBundle:Core:index.html.twig', array('animals' => $animals, 'secret' => $secret));
     }
 
     public function addAction(Request $request)
@@ -47,8 +50,13 @@ class CoreController extends Controller
         return $this->render('CoreBundle:Core:edit.html.twig', array('form' => $form->createView()));
     }
 
-    public function deleteAction(Animal $animal)
+    public function deleteAction(Animal $animal, $csrf_token, Request $request)
     {
+        $secret = $request->getSession()->get('secret');
+
+        if($secret === null || !$this->isCsrfTokenValid($secret, $csrf_token))
+            throw $this->createAccessDeniedException("Token CSRF non valide !");
+
         $this->getDoctrine()->getManager()->remove($animal);
         $this->getDoctrine()->getManager()->flush();
 

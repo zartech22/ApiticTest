@@ -13,7 +13,7 @@ core_edit:
         id: \d+
 
 core_delete:
-    path: /delete/{id}
-    defaults: { _controller: CoreBundle:Core:delete }
+    path: /delete/{id}/{csrf_token}
+    defaults: { _controller: CoreBundle:Core:delete, csrf_token: "" }
     requirements:
         id: \d+

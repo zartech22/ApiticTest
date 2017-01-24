@@ -21,7 +21,7 @@
                     <td>
                         <a href="{{ path('core_edit', {'id': animal.id}) }}" style="color: #333;"><span class="glyphicon glyphicon-edit"></span></a>
                         &nbsp;
-                        <a href="{{ path('core_delete', {'id': animal.id}) }}" style="color: #333;"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a href="{{ path('core_delete', {'id': animal.id, 'csrf_token': csrf_token(secret)}) }}" style="color: #333;"><span class="glyphicon glyphicon-trash"></span></a>
                     </td>
                 </tr>
             {% endfor %}
