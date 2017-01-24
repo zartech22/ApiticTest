@@ -31,6 +31,8 @@ class CoreController extends Controller
             $manager->persist($animal);
             $manager->flush();
 
+            $this->addFlash('success', 'Animal correctement ajouté à votre liste !');
+
             return $this->redirectToRoute('core_homepage');
         }
 
@@ -44,6 +46,7 @@ class CoreController extends Controller
         if ($form->handleRequest($request)->isValid())
         {
             $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'La modification a bien été appliquée');
 
             return $this->redirectToRoute('core_homepage');
         }

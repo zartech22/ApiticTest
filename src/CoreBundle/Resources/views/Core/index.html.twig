@@ -21,7 +21,10 @@
                     <td>
                         <a href="{{ path('core_edit', {'id': animal.id}) }}" style="color: #333;"><span class="glyphicon glyphicon-edit"></span></a>
                         &nbsp;
-                        <a href="{{ path('core_delete', {'id': animal.id, 'csrf_token': csrf_token(secret)}) }}" style="color: #333;"><span class="glyphicon glyphicon-trash"></span></a>
+                        <a href="{{ path('core_delete', {'id': animal.id, 'csrf_token': csrf_token(secret)}) }}"
+                           style="color: #333;" class="delete_link">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
@@ -32,4 +35,28 @@
 
     {{ include('CoreBundle:Core:addButton.html.twig') }}
 
+    <div class="modal fade" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                    <h4 class="modal-title">Confirmation</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Êtes-vous sûr de vouloir supprimer ce pauvre animal ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <a href="#" class="btn btn-primary">Supprimer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block core_javascript %}
+    <script type="text/javascript" src="{{ asset('js/confirmDeletion.js') }}"></script>
 {% endblock %}
